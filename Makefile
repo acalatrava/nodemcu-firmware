@@ -150,13 +150,21 @@ endef
 $(BINODIR)/%.bin: $(IMAGEODIR)/%.out
 	@mkdir -p $(BINODIR)
 	$(ESPTOOL) elf2image $< -o $(FIRMWAREDIR)
+	@cd $(FIRMWAREDIR)/../spiffy; mkdir -p build; $(MAKE)
+	@echo Creating spiffs rom...
+	@mkdir -p $(FIRMWAREDIR)/files; pwd; cp -R $(FIRMWAREDIR)/../files/* $(FIRMWAREDIR)/files/; cd $(FIRMWAREDIR); ../spiffy/build/spiffy; rm -R files
+	@echo Creating full firmware binary...
+	@cd $(FIRMWAREDIR); cat 0x00000.bin > firmware.bin; FILESIZE=$$(cat firmware.bin | wc -c); RESTO=$$((65536 - $$FILESIZE)); printf "%0.s\xff" $$(seq 1 $$RESTO) >> firmware.bin
+	@cd $(FIRMWAREDIR); cat 0x10000.bin >> firmware.bin; IROMSIZE=$$(cat firmware.bin | wc -c); STARTADDR=$$(( (($$IROMSIZE+16384) + 16384) & 4294950912)); RESTO=$$(($$STARTADDR - $$IROMSIZE)); printf "%0.s\xff" $$(seq 1 $$RESTO) >> firmware.bin; cat spiff_rom.bin >> firmware.bin; SPIFADDR=$$(printf "0x%x.bin" $$STARTADDR); mv spiff_rom.bin $$SPIFADDR
+	@cd $(FIRMWAREDIR); FILESIZE=$$(cat firmware.bin | wc -c); RESTO=$$((520192 - $$FILESIZE)); printf "%0.s\xff" $$(seq 1 $$RESTO) >> firmware.bin
 
 #############################################################
 # Rules base
 # Should be done in top-level makefile only
 #
 
-all:	.subdirs $(OBJS) $(OLIBS) $(OIMAGES) $(OBINS) $(SPECIAL_MKTARGETS)
+all:	.subdirs $(OBJS) $(OLIBS) $(OIMAGES) $(OBINS) $(SPECIAL_MKTARGETS) 
+#.spiffy .createfirm
 
 clean:
 	$(foreach d, $(SUBDIRS), $(MAKE) -C $(d) clean;)
@@ -165,6 +173,8 @@ clean:
 clobber: $(SPECIAL_CLOBBER)
 	$(foreach d, $(SUBDIRS), $(MAKE) -C $(d) clobber;)
 	$(RM) -r $(ODIR)
+	$(RM) bin/0x*.bin
+	$(RM) bin/firmware.bin
 
 flash: 
 ifndef PDIR
@@ -175,6 +185,9 @@ endif
 
 .subdirs:
 	@set -e; $(foreach d, $(SUBDIRS), $(MAKE) -C $(d);)
+
+.checkdirs:
+	@$(foreach d, $(SUBDIRS), echo $(d);)
 
 #.subdirs:
 #	$(foreach d, $(SUBDIRS), $(MAKE) -C $(d))
