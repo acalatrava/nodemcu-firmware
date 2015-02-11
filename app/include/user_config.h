@@ -21,6 +21,7 @@
 
 #ifdef DEVELOP_VERSION
 #define NODE_DEBUG
+#define COAP_DEBUG
 #endif	/* DEVELOP_VERSION */
 
 #define NODE_ERROR
@@ -64,6 +65,7 @@
 #define LUA_USE_MODULES_OW
 #define LUA_USE_MODULES_BIT
 #define LUA_USE_MODULES_MQTT
+#define LUA_USE_MODULES_COAP
 #endif /* LUA_USE_MODULES */
 
 // #define LUA_NUMBER_INTEGRAL
