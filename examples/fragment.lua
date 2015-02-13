@@ -340,6 +340,7 @@ uart.on("data",4, function(data)
 end, 0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 -- use copper addon for firefox
 cs=coap.Server()
 cs:listen(5683)
@@ -356,6 +357,8 @@ cc = coap.Client()
 cc:get(coap.CON, "coap://192.168.18.100:5683/.well-known/core")
 cc:post(coap.NON, "coap://192.168.18.100:5683/", "Hello")
 =======
+=======
+>>>>>>> upstream/master
 file.open("hello.lua","w+")
 file.writeline([[print("hello nodemcu")]])
 file.writeline([[print(node.heap())]])
@@ -364,4 +367,7 @@ file.close()
 node.compile("hello.lua")
 dofile("hello.lua")
 dofile("hello.lc")
+<<<<<<< HEAD
+>>>>>>> upstream/master
+=======
 >>>>>>> upstream/master

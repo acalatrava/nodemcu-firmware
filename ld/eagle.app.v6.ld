@@ -6,7 +6,11 @@ MEMORY
   dram0_0_seg :                       	org = 0x3FFE8000, len = 0x14000
   iram1_0_seg :                       	org = 0x40100000, len = 0x8000
 <<<<<<< HEAD
+<<<<<<< HEAD
   irom0_0_seg :                       	org = 0x40210000, len = 0x60000
+=======
+  irom0_0_seg :                       	org = 0x40210000, len = 0x54000
+>>>>>>> upstream/master
 =======
   irom0_0_seg :                       	org = 0x40210000, len = 0x54000
 >>>>>>> upstream/master
