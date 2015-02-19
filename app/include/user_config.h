@@ -69,15 +69,8 @@
 #define LUA_USE_MODULES_OW
 #define LUA_USE_MODULES_BIT
 #define LUA_USE_MODULES_MQTT
-<<<<<<< HEAD
-<<<<<<< HEAD
 #define LUA_USE_MODULES_COAP
-=======
 // #define LUA_USE_MODULES_WS2812	// TODO: put this device specific module to device driver section.
->>>>>>> upstream/master
-=======
-// #define LUA_USE_MODULES_WS2812	// TODO: put this device specific module to device driver section.
->>>>>>> upstream/master
 #endif /* LUA_USE_MODULES */
 
 // TODO: put device specific module to device driver section.

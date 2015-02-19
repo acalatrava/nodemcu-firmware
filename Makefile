@@ -169,12 +169,12 @@ all:	.subdirs $(OBJS) $(OLIBS) $(OIMAGES) $(OBINS) $(SPECIAL_MKTARGETS)
 clean:
 	$(foreach d, $(SUBDIRS), $(MAKE) -C $(d) clean;)
 	$(RM) -r $(ODIR)/$(TARGET)/$(FLAVOR)
+	$(RM) bin/0x*.bin
+	$(RM) bin/firmware.bin
 
 clobber: $(SPECIAL_CLOBBER)
 	$(foreach d, $(SUBDIRS), $(MAKE) -C $(d) clobber;)
 	$(RM) -r $(ODIR)
-	$(RM) bin/0x*.bin
-	$(RM) bin/firmware.bin
 
 flash: 
 ifndef PDIR
